@@ -2,6 +2,8 @@ const express = require("express");
 const admin = require("firebase-admin");
 const twilio = require("twilio");
 const router= express.Router()
+const serverless = require('serverless-http')
+
 // Initialize Firebase Admin SDK
 var serviceAccount = require("./links-7f59e-firebase-adminsdk-2s5t7-edcdb0b355.json");
 admin.initializeApp({
@@ -87,3 +89,5 @@ app.use('/api',router)
 app.listen(3000, () => {
   console.log("Server started on port 3000");
 });
+module.exports = app
+module.exports.handler = serverless(app)

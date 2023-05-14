@@ -86,8 +86,8 @@ router
   })
 app.use('/api',router)
 // Start the Express server
-app.listen(3000, () => {
-  console.log("Server started on port 3000");
-});
+// app.listen(3000, () => {
+//   console.log("Server started on port 3000");
+// });
 module.exports = app
 module.exports.handler = serverless(app)

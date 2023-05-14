@@ -1,7 +1,7 @@
 const express = require("express");
 const admin = require("firebase-admin");
 const twilio = require("twilio");
-
+const router= express.Router()
 // Initialize Firebase Admin SDK
 var serviceAccount = require("./links-7f59e-firebase-adminsdk-2s5t7-edcdb0b355.json");
 admin.initializeApp({
@@ -11,7 +11,7 @@ admin.initializeApp({
 // Initialize Express app
 const app = express();
 
-app.get("/get", (req, res) => {
+router.get("/get", (req, res) => {
   // Get a reference to the Firebase Auth client SDK
   const auth = admin.auth();
 
@@ -35,7 +35,7 @@ app.get("/get", (req, res) => {
 });
 
 // Define an API endpoint to send SMS messages
-app
+router
   .post("/send-sms", async (req, res) => {
     // Get a reference to the Firebase Auth users collection
     // const usersRef = admin.firestore().collection('users');
@@ -82,7 +82,7 @@ app
         res.status(500).send("Error sending SMS messages");
       });
   })
-
+app.use('/api',router)
 // Start the Express server
 app.listen(3000, () => {
   console.log("Server started on port 3000");

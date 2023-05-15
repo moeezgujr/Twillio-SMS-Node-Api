@@ -27,9 +27,9 @@ router.get('/', (req, res) => {
     );
 //Create new record
 router.post('/add', (req, res) => {
-  twilioClient.validationRequests
-  .create({friendlyName: 'My Home Phone Number', phoneNumber: req.body.phoneNumber})
-  .then(validation_request =>  res.send('New record addedd.',validation_request));
+//   twilioClient.validationRequests
+//   .create({friendlyName: 'My Home Phone Number', phoneNumber: req.body.phoneNumber})
+//   .then(validation_request =>  res.send('New record addedd.',validation_request));
   res.send('New record addedd.',req.body);
 });
 router

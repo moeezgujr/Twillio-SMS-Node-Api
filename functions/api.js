@@ -7,7 +7,7 @@ const twilio = require("twilio");
 let records = [];
 
 
-var serviceAccount = require("./links-7f59e-firebase-adminsdk-2s5t7-edcdb0b355.json");
+var serviceAccount = require("../links-7f59e-firebase-adminsdk-2s5t7-edcdb0b355.json");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://links-7f59e.firebaseio.com",

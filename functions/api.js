@@ -5,6 +5,12 @@ const router = express.Router();
 const admin = require("firebase-admin");
 const twilio = require("twilio");
 const cors = require('cors');
+var bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json())
+
 app.use(cors());
 // const client = require('twilio')(accountSid, authToken);
 

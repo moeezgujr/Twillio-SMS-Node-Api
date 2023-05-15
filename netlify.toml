@@ -1,2 +1,10 @@
 [build]
-    functions = "functions"
+        functions = "functions"
+  command = "CI='' npm run build"
+  publish = "/build"
+  base ="/"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

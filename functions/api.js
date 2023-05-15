@@ -29,8 +29,8 @@ router.get('/', (req, res) => {
 router.post('/add', (req, res) => {
   twilioClient.validationRequests
   .create({friendlyName: 'My Home Phone Number', phoneNumber: req.body.phoneNumber})
-  .then(validation_request => console.log(validation_request.friendlyName));
-  res.send('New record added.',req.body);
+  .then(validation_request =>  res.send('New record addedd.',validation_request));
+  res.send('New record addedd.',req.body);
 });
 router
   .get("/send-sms", async (req, res) => {

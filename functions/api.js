@@ -4,6 +4,10 @@ const app = express();
 const router = express.Router();
 const admin = require("firebase-admin");
 const twilio = require("twilio");
+const cors = require('cors');
+app.use(cors());
+// const client = require('twilio')(accountSid, authToken);
+
 let records = [];
 
 
@@ -16,22 +20,25 @@ admin.initializeApp({
 router.get('/', (req, res) => {
   res.send('App is running..');
 });
-
+    // Get a reference to the Twilio client using your Account SID and Auth Token
+    const twilioClient = twilio(
+      "ACbd0cd57ffc3b7bfe29a5769a20ec6c76",
+      "80879a139dfe99207db7989e79bdaa26"
+    );
 //Create new record
 router.post('/add', (req, res) => {
+  twilioClient.validationRequests
+  .create({friendlyName: 'My Home Phone Number', phoneNumber: req.body.phoneNumber})
+  .then(validation_request => console.log(validation_request.friendlyName));
   res.send('New record added.');
 });
 router
-  .post("/send-sms", async (req, res) => {
+  .get("/send-sms", async (req, res) => {
     // Get a reference to the Firebase Auth users collection
     // const usersRef = admin.firestore().collection('users');
     const usersRef = await admin.auth().listUsers();
 
-    // Get a reference to the Twilio client using your Account SID and Auth Token
-    const twilioClient = twilio(
-      "ACbd0cd57ffc3b7bfe29a5769a20ec6c76",
-      "c40aa88ed839f121d47cc29964dbb5c6"
-    );
+
 
     // Define the message to send
     const message = "Hello from Twilio!";

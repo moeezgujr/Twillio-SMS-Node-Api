@@ -1,42 +1,26 @@
-const express = require("express");
+const express = require('express');
+const serverless = require('serverless-http');
+const app = express();
+const router = express.Router();
 const admin = require("firebase-admin");
 const twilio = require("twilio");
-const router= express.Router()
-const serverless = require('serverless-http')
+let records = [];
 
-// Initialize Firebase Admin SDK
+
 var serviceAccount = require("./links-7f59e-firebase-adminsdk-2s5t7-edcdb0b355.json");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://links-7f59e.firebaseio.com",
 });
-// Initialize Express app
-const app = express();
-
-router.get("/get", (req, res) => {
-  // Get a reference to the Firebase Auth client SDK
-  const auth = admin.auth();
-
-  // Get the user's email and password from a form or input fields
-  const email = "user@example.com";
-  const password = "password123";
-  const user = {
-    email: "user@example.com",
-    password: "password123",
-    displayName: "John Doe",
-    photoURL: "https://example.com/profile.jpg",
-  };
-  auth
-    .createUser(user)
-    .then((userRecord) => {
-      console.log("Successfully created new user:", userRecord.toJSON());
-    })
-    .catch((error) => {
-      console.error("Error creating new user:", error);
-    });
+//Get all students
+router.get('/', (req, res) => {
+  res.send('App is running..');
 });
 
-// Define an API endpoint to send SMS messages
+//Create new record
+router.post('/add', (req, res) => {
+  res.send('New record added.');
+});
 router
   .post("/send-sms", async (req, res) => {
     // Get a reference to the Firebase Auth users collection
@@ -84,10 +68,36 @@ router
         res.status(500).send("Error sending SMS messages");
       });
   })
-app.use('/api',router)
-// Start the Express server
-// app.listen(3000, () => {
-//   console.log("Server started on port 3000");
-// });
-module.exports = app
-module.exports.handler = serverless(app)
+//delete existing record
+router.delete('/', (req, res) => {
+  res.send('Deleted existing record');
+});
+
+//updating existing record
+router.put('/', (req, res) => {
+  res.send('Updating existing record');
+});
+
+//showing demo records
+router.get('/demo', (req, res) => {
+  res.json([
+    {
+      id: '001',
+      name: 'Smith',
+      email: 'smith@gmail.com',
+    },
+    {
+      id: '002',
+      name: 'Sam',
+      email: 'sam@gmail.com',
+    },
+    {
+      id: '003',
+      name: 'lily',
+      email: 'lily@gmail.com',
+    },
+  ]);
+});
+
+app.use('/.netlify/functions/api', router);
+module.exports.handler = serverless(app);
